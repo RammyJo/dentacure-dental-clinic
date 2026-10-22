@@ -26,9 +26,8 @@
   --line-light: rgba(255, 255, 255, 0.16);
   --coral: #a9714f;
 
-  --font-display: "Boska", "Iowan Old Style", Georgia, serif;
+  --font-display: "Clash Display", "Segoe UI", system-ui, sans-serif;
   --font-body: "Cabinet Grotesk", "Segoe UI", system-ui, sans-serif;
-  --font-serif: "Boska", "Iowan Old Style", Georgia, serif;
 
   --radius: 28px;
   --radius-sm: 18px;
@@ -178,11 +177,11 @@ ul, ol {
 }
 
 .serif-accent {
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-weight: 400;
+  font-family: var(--font-display);
+  font-style: normal;
+  font-weight: 500;
   letter-spacing: -0.01em;
-  line-height: 0.9;
+  line-height: 1;
 }
 
 .eyebrow {
@@ -923,9 +922,9 @@ ul, ol {
 .hero-title {
   font-family: var(--font-display);
   font-size: clamp(3.2rem, 6.3vw, 6.1rem);
-  font-weight: 500;
+  font-weight: 600;
   line-height: 0.98;
-  letter-spacing: -0.022em;
+  letter-spacing: -0.03em;
   color: var(--ink);
   text-wrap: balance;
 }
@@ -1396,7 +1395,7 @@ ul, ol {
   font-size: clamp(2.4rem, 4.7vw, 4.2rem);
   font-weight: 500;
   line-height: 1.04;
-  letter-spacing: -0.022em;
+  letter-spacing: -0.026em;
   color: var(--ink);
 }
 
@@ -2062,53 +2061,7 @@ ul, ol {
   color: var(--muted);
 }
 
-.clinic-quote {
-  position: relative;
-  margin-top: 30px;
-  padding: 26px 28px 22px;
-  border: 1px solid var(--line);
-  border-radius: 22px;
-  background: rgba(251, 252, 248, 0.7);
-}
 
-.quote-mark {
-  width: 26px;
-  height: 21px;
-  margin-bottom: 12px;
-  fill: var(--sage);
-  opacity: 0.6;
-}
-
-.clinic-quote p {
-  font-family: var(--font-serif);
-  font-size: clamp(1.2rem, 1.7vw, 1.42rem);
-  font-style: italic;
-  line-height: 1.4;
-  color: var(--ink);
-}
-
-.clinic-quote footer {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  margin-top: 16px;
-  padding-top: 14px;
-  border-top: 1px solid var(--line);
-}
-
-.clinic-quote .sig {
-  font-family: var(--font-serif);
-  font-size: 1.15rem;
-  font-style: italic;
-  color: var(--sage-deep);
-}
-
-.clinic-quote footer span:last-child {
-  font-size: 0.62rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
 
 .mv-grid {
   display: grid;
@@ -2211,9 +2164,9 @@ ul, ol {
   margin-top: 24px;
   padding-top: 16px;
   border-top: 1px solid rgba(255, 255, 255, 0.11);
-  font-family: var(--font-serif);
+  font-family: var(--font-display);
   font-size: 1.02rem;
-  font-style: italic;
+  font-style: normal;
   color: rgba(255, 255, 255, 0.48);
 }
 
@@ -2362,7 +2315,7 @@ ul, ol {
 
 .suite-frame {
   position: relative;
-  aspect-ratio: 4 / 4.85;
+  aspect-ratio: 580 / 940;
   overflow: hidden;
   border-radius: 30px;
   border: 1px solid rgba(255, 255, 255, 0.16);
@@ -2693,7 +2646,7 @@ ul, ol {
 
 .step-num {
   display: inline-block;
-  font-family: var(--font-serif);
+  font-family: var(--font-display);
   font-size: clamp(2rem, 2.8vw, 2.6rem);
   line-height: 1;
   color: var(--sage-deep);
@@ -4991,14 +4944,6 @@ ul, ol {
     display: none;
   }
 
-  .clinic-quote {
-    padding: 20px;
-  }
-
-  .clinic-quote p {
-    font-size: 1.16rem;
-  }
-
   .mv-grid {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -5427,4 +5372,28 @@ ul, ol {
 
 .topbar .live {
   color: rgba(255, 255, 255, 0.9);
+}
+
+
+/* ---------- Touch targets on small screens ---------- */
+@media (max-width: 760px) {
+  .match-chip {
+    min-height: 42px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  .footer-col a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+  }
+
+  .back-top {
+    padding: 10px 8px;
+  }
+
+  .wizard-step {
+    min-height: 44px;
+  }
 }

@@ -26,8 +26,23 @@ Opening `index.html` directly from disk also works, but the Google Maps embed ne
 | `index.html` | All page content, SVG icon sprite, metadata and structured data |
 | `styles.css` | Design system, layout and every responsive breakpoint |
 | `script.js` | Mobile menu, smile matcher, gallery lightbox, FAQ, booking wizard, live open/closed status |
-| `assets/img/` | Clinic photography, logo and before/after sample (10 images) |
-| `assets/favicon.svg` | Mint tooth favicon |
+| `assets/img/` | Clinic photography, logo and before/after sample (7 photos + 2 logo files) |
+| `assets/fonts/` | Self-hosted Clash Display (headings) and Cabinet Grotesk (text), plus `fonts.css` |
+| `assets/favicon.svg` | Sage-and-slate tooth favicon |
+| `404.html` | Branded not-found page |
+| `robots.txt`, `sitemap.xml` | Crawler and indexing hints |
+
+---
+
+## Typography & colour
+
+- **Clash Display** for headlines and numbers; **Cabinet Grotesk** for body and UI. Both are self-hosted
+  `.woff2` files, subset-free, with a `font-display: swap` fallback - no Google Fonts request.
+- The palette is sampled from the clinic's logo: sage `#99AC86` and slate `#737D84`, over warm paper
+  `#F5FAF0`. Slate `#2A3A44` is the ink and top-bar colour; deep sage `#5B6E4A` is the accessible
+  accent on light backgrounds.
+- Change the two font stacks in `styles.css` (`--font-display`, `--font-body`) and the preload in
+  `index.html` when swapping typefaces.
 
 ---
 
@@ -64,13 +79,11 @@ The clinic's public sources disagree:
 
 The clinic confirms it is open **7 days a week: Mon–Sat 9:00 AM – 5:30 PM, Sunday 1:00 PM – 6:00 PM**.
 
-If the clinic confirms different hours, update **all five** places:
+If the clinic confirms different hours, update **all three** places:
 
 1. `index.html` → the hours table in `#visit` (`data-days="1,2,3,4,5"` etc.)
-2. `index.html` → the booking panel's "Clinic hours" line
-3. `index.html` → the final CTA line ("Mon–Sat 9:00 AM – 5:30 PM…")
-4. `index.html` → `openingHoursSpecification` in the JSON-LD block
-5. `script.js` → `openStatus()` and the `times` / `timesSunday` slot arrays
+2. `index.html` → `openingHoursSpecification` in the JSON-LD block
+3. `script.js` → `openStatus()` and the `times` / `timesSunday` slot arrays
 
 The "Open now / Closed" pill is calculated live in `Asia/Manila`, so it follows those numbers automatically.
 
@@ -129,3 +142,7 @@ Social preview images must be **absolute URLs**. They currently point at `https:
 - Keyboard support for the FAQ, lightbox (`←` / `→` / `Esc`) and the mobile menu (`Esc`)
 - No horizontal overflow from 320 px to 1920 px
 - Photos and fonts are bundled; only the optional map embed loads from the network
+- Every image has intrinsic `width`/`height` (no layout shift); below-the-fold photos are lazy-loaded
+- Logos are WebP (23 KB + 5 KB) instead of the original 99 KB + 182 KB PNGs
+- `robots.txt`, `sitemap.xml` and a branded `404.html` are included; the map iframe is lazy and titled
+- JSON-LD covers address, phone, geo, hours, map and social profile; HSTS is enabled in `_headers`

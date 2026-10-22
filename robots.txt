@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://dentacure-dental-clinic.pages.dev/sitemap.xml
