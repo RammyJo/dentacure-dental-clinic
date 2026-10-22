@@ -15,7 +15,7 @@ python -m http.server 4173
 
 Then open <http://localhost:4173/>.
 
-Opening `index.html` directly from disk also works, but Google Fonts and the Google Maps embed need an internet connection. All clinic photos are bundled locally.
+Opening `index.html` directly from disk also works, but the Google Maps embed needs an internet connection. All clinic photos and fonts are bundled locally.
 
 ---
 
@@ -128,4 +128,4 @@ Social preview images must be **absolute URLs**. They currently point at `https:
 - `prefers-reduced-motion` disables reveals, counters, parallax and smooth scrolling
 - Keyboard support for the FAQ, lightbox (`←` / `→` / `Esc`) and the mobile menu (`Esc`)
 - No horizontal overflow from 320 px to 1920 px
-- Photos are pre-cropped and bundled; only fonts and the optional map embed load from the network
+- Photos and fonts are bundled; only the optional map embed loads from the network
