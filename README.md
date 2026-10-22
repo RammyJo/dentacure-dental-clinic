@@ -26,7 +26,7 @@ Opening `index.html` directly from disk also works, but Google Fonts and the Goo
 | `index.html` | All page content, SVG icon sprite, metadata and structured data |
 | `styles.css` | Design system, layout and every responsive breakpoint |
 | `script.js` | Mobile menu, smile matcher, gallery lightbox, FAQ, booking wizard, live open/closed status |
-| `assets/img/` | Clinic photography (8 images) |
+| `assets/img/` | Clinic photography, logo and before/after sample (10 images) |
 | `assets/favicon.svg` | Mint tooth favicon |
 
 ---
@@ -40,7 +40,7 @@ Verified from the clinic's public Facebook page and its Google Site:
 
 **Address:** Unit A, 2nd Floor, Grand Plaza Building, Brgy. Sevilla, McArthur Highway, San Fernando City, La Union (beside Ilaw Atbp)
 **Phone / text:** 0976 485 7648 — **Email:** my.dentacure@gmail.com
-**Founder:** Pauline O. Trinidad, DMD
+**Founder:** Pauline Trinidad-Acosta, DMD
 
 The 7 services, mission, vision, founder quote and FAQs are based on publicly posted clinic material.
 
@@ -62,7 +62,7 @@ The clinic's public sources disagree:
 | Older Facebook footer graphic | 9:00 AM – 6:00 PM | By appointment |
 | Google Site | 9:00 AM – 6:00 PM | By appointment |
 
-The site currently uses **Mon–Sat 9:00 AM – 5:30 PM, Sunday 1:00 – 5:00 PM by appointment** (matching the most recent hours graphic).
+The clinic confirms it is open **7 days a week: Mon–Sat 9:00 AM – 5:30 PM, Sunday 1:00 PM – 6:00 PM**.
 
 If the clinic confirms different hours, update **all five** places:
 
@@ -93,15 +93,32 @@ To collect requests properly later, point the form at a service such as Formspre
 
 ## Deploying
 
-Upload the `DentaCure-Website` folder to any static host:
+The site is live on Cloudflare Pages, connected to GitHub, so every push to `main` deploys automatically.
+
+- **Live:** <https://dentacure-dental-clinic.pages.dev/>
+- **Repo:** <https://github.com/RammyJo/dentacure-dental-clinic>
+- **Cloudflare project:** `dentacure-dental-clinic` — build command empty, output directory `/`, production branch `main`
+
+To ship a change:
+
+```powershell
+cd DentaCure-Website
+git add -A
+git commit -m "Update opening hours"
+git push
+```
+
+Cloudflare builds and promotes it in about a minute. Every other branch and pull request gets its own preview URL.
+
+The folder also works unchanged on any other static host:
 
 - **Netlify / Vercel / Cloudflare Pages** — drag the folder in, no build command
 - **GitHub Pages** — publish the folder as the site root
 - **cPanel / shared hosting** — upload the contents to `public_html`
 
-Before going live, set the real domain in `og:url` if you add one, and confirm the Google Maps embed loads (the page includes an illustrated fallback plus an "Open in Maps" link if the iframe is blocked).
+If you attach a custom domain, update `og:url`, `og:image`, `twitter:image` and `<link rel="canonical">` in `index.html` to the new absolute URLs, or social previews will point at the `.pages.dev` address.
 
-Social preview images must be **absolute URLs**. Once the site has a domain, change the `og:image` value in `index.html` from `assets/img/dr-acosta-portrait.jpg` to something like `https://yourdomain.com/assets/img/dr-acosta-portrait.jpg`, or previews will not render on Facebook or Messenger.
+Social preview images must be **absolute URLs**. They currently point at `https://dentacure-dental-clinic.pages.dev/assets/img/dr-acosta-portrait.jpg`.
 
 ---
 

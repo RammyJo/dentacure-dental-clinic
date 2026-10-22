@@ -551,6 +551,33 @@ ul, ol {
   flex: none;
 }
 
+.brand-logo {
+  display: block;
+  height: 40px;
+  width: auto;
+  transition: transform 0.4s var(--ease);
+}
+
+.brand:hover .brand-logo {
+  transform: translateY(-1px);
+}
+
+.site-header.is-scrolled .brand-logo {
+  height: 36px;
+}
+
+.brand-badge {
+  display: block;
+  width: 92px;
+  height: 92px;
+  border-radius: 50%;
+  transition: transform 0.5s var(--ease);
+}
+
+.brand-badge:hover {
+  transform: rotate(-3deg);
+}
+
 .brand-mark {
   display: grid;
   place-items: center;
@@ -2500,6 +2527,19 @@ ul, ol {
   grid-column: span 5;
 }
 
+.gallery .gallery-item.work-tile {
+  grid-column: span 5;
+  grid-row: span 2;
+}
+
+.gallery .gallery-item.wide-7 {
+  grid-column: span 7;
+}
+
+.gallery .gallery-item.pano {
+  grid-column: span 12;
+}
+
 .gallery-item:nth-child(2) {
   grid-column: span 5;
 }
@@ -2523,6 +2563,8 @@ ul, ol {
 .gallery-item:nth-child(2) img { object-position: 50% 26%; }
 .gallery-item:nth-child(3) img { object-position: 50% 22%; }
 .gallery-item:nth-child(4) img { object-position: 52% 50%; }
+
+.gallery .gallery-item.work-tile img { object-position: 50% 50%; }
 
 .gallery-shade {
   position: absolute;
@@ -5026,6 +5068,11 @@ ul, ol {
 
   .gallery-item:nth-child(1) {
     aspect-ratio: 4 / 3.4;
+  }
+
+  .gallery .gallery-item.work-tile {
+    grid-row: auto;
+    aspect-ratio: 3 / 4;
   }
 
   .gallery-caption {

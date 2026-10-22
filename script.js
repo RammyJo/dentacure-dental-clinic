@@ -199,7 +199,7 @@
     const { day, minutes } = manilaNow();
     const sunday = day === 0;
     const openAt = sunday ? 13 * 60 : 9 * 60;
-    const closeAt = sunday ? 17 * 60 : 17 * 60 + 30;
+    const closeAt = sunday ? 18 * 60 : 17 * 60 + 30;
     const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
     if (minutes >= openAt && minutes < closeAt) {
