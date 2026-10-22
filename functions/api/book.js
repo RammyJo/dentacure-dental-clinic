@@ -41,6 +41,12 @@ const WEEKDAY_SLOTS = new Set([
 const SUNDAY_SLOTS = new Set(["1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM"]);
 
 const DAY_NAMES = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+const DAY_SHORT = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+const MONTHS = [
+  "January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December",
+];
+const MONTHS_SHORT = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
 /* ------------------------------------------------------------------ */
 /* Helpers                                                             */
@@ -234,20 +240,26 @@ async function archive(env, booking) {
 /* ------------------------------------------------------------------ */
 
 export function composeEmail(booking) {
-  const day = booking.date
-    ? DAY_NAMES[new Date(`${booking.date}T00:00:00Z`).getUTCDay()]
-    : "";
+  let friendly = "";
+  let short = "";
+  if (booking.date) {
+    const [y, m, d] = booking.date.split("-").map(Number);
+    const dow = new Date(`${booking.date}T00:00:00Z`).getUTCDay();
+    friendly = `${DAY_NAMES[dow]}, ${d} ${MONTHS[m - 1]} ${y}`;
+    short = `${DAY_SHORT[dow]} ${d} ${MONTHS_SHORT[m - 1]}`;
+  }
+
   const dateLabel = booking.flexible
     ? booking.date
-      ? `${booking.date} (${day}) — flexible`
+      ? `${friendly} — flexible`
       : "Flexible — suggest a date"
-    : `${booking.date} (${day})`;
+    : friendly;
   const timeLabel = booking.flexible
     ? booking.time || "Flexible — suggest a time"
     : booking.time;
 
   const subject = `New booking · ${booking.name} · ${
-    booking.flexible ? "flexible" : `${booking.date} ${booking.time}`
+    booking.flexible ? "flexible timing" : `${short}, ${booking.time}`
   }`;
 
   const rows = [
@@ -300,10 +312,10 @@ export function composeEmail(booking) {
             ${htmlRows}
           </table>
           <p style="margin:18px 0 0;font-size:14px;line-height:1.6;color:#5e6c74;">
-            Reply to this email${
-              booking.email ? " or tap the patient's address above" : ""
-            } to confirm the slot. Call or text
-            <a href="${phoneHref}" style="color:#2a3a44;font-weight:600;">${escapeHtml(booking.phone)}</a>.
+            Reply to this email to confirm the slot${
+              booking.email ? ", or use the button below" : ""
+            }. Call or text
+            <a href="${phoneHref}" style="color:#2a3a44;font-weight:600;white-space:nowrap;">${escapeHtml(booking.phone)}</a>.
           </p>
           ${
             mailHref
