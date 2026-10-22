@@ -26,9 +26,9 @@
   --line-light: rgba(255, 255, 255, 0.16);
   --coral: #e8613f;
 
-  --font-display: "Manrope", "Segoe UI", system-ui, sans-serif;
-  --font-body: "Manrope", "Segoe UI", system-ui, sans-serif;
-  --font-serif: "Fraunces", "Times New Roman", Georgia, serif;
+  --font-display: "Boska", "Iowan Old Style", Georgia, serif;
+  --font-body: "Cabinet Grotesk", "Segoe UI", system-ui, sans-serif;
+  --font-serif: "Boska", "Iowan Old Style", Georgia, serif;
 
   --radius: 28px;
   --radius-sm: 18px;
@@ -312,7 +312,7 @@ ul, ol {
 }
 
 .btn-ink:hover {
-  background: #0a332b;
+  background: #1a2742;
   box-shadow: 0 16px 36px -18px rgba(15, 26, 46, 0.6);
 }
 
@@ -809,7 +809,7 @@ ul, ol {
   font-family: var(--font-display);
   font-size: clamp(1.6rem, 7vw, 2.2rem);
   font-weight: 400;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.016em;
   color: var(--cream);
   transition: color 0.3s, padding-left 0.4s var(--ease);
 }
@@ -922,11 +922,12 @@ ul, ol {
 
 .hero-title {
   font-family: var(--font-display);
-  font-size: clamp(3.15rem, 6.1vw, 5.9rem);
-  font-weight: 600;
-  line-height: 0.94;
-  letter-spacing: -0.055em;
+  font-size: clamp(3.2rem, 6.3vw, 6.1rem);
+  font-weight: 500;
+  line-height: 0.98;
+  letter-spacing: -0.022em;
   color: var(--ink);
+  text-wrap: balance;
 }
 
 .hero-title .serif-accent {
@@ -996,7 +997,7 @@ ul, ol {
   font-size: clamp(1.3rem, 1.7vw, 1.55rem);
   font-weight: 500;
   line-height: 1;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.016em;
   color: var(--ink);
 }
 
@@ -1392,10 +1393,10 @@ ul, ol {
 .process-head h2,
 .visit-head h2 {
   font-family: var(--font-display);
-  font-size: clamp(2.3rem, 4.5vw, 4rem);
+  font-size: clamp(2.4rem, 4.7vw, 4.2rem);
   font-weight: 500;
-  line-height: 1.02;
-  letter-spacing: -0.052em;
+  line-height: 1.04;
+  letter-spacing: -0.022em;
   color: var(--ink);
 }
 
@@ -1761,7 +1762,7 @@ ul, ol {
   font-size: clamp(2.1rem, 3.7vw, 3.35rem);
   font-weight: 500;
   line-height: 1.03;
-  letter-spacing: -0.05em;
+  letter-spacing: -0.02em;
   color: var(--cream);
 }
 
@@ -1873,7 +1874,7 @@ ul, ol {
   font-size: clamp(1.65rem, 2.4vw, 2.1rem);
   font-weight: 500;
   line-height: 1.1;
-  letter-spacing: -0.045em;
+  letter-spacing: -0.02em;
 }
 
 .matcher-result > p:not(.result-kicker) {
@@ -2045,7 +2046,7 @@ ul, ol {
   font-size: clamp(2.3rem, 4.2vw, 3.7rem);
   font-weight: 500;
   line-height: 1.03;
-  letter-spacing: -0.052em;
+  letter-spacing: -0.022em;
   color: var(--ink);
 }
 
@@ -2183,7 +2184,7 @@ ul, ol {
   font-size: clamp(1.7rem, 2.5vw, 2.25rem);
   font-weight: 500;
   line-height: 1;
-  letter-spacing: -0.045em;
+  letter-spacing: -0.02em;
   color: var(--cream);
 }
 
@@ -2279,7 +2280,7 @@ ul, ol {
   font-size: clamp(2.3rem, 4.4vw, 3.9rem);
   font-weight: 500;
   line-height: 1.03;
-  letter-spacing: -0.052em;
+  letter-spacing: -0.022em;
   color: var(--cream);
 }
 
@@ -2799,7 +2800,7 @@ ul, ol {
   font-size: clamp(2.4rem, 4.2vw, 3.7rem);
   font-weight: 500;
   line-height: 1;
-  letter-spacing: -0.055em;
+  letter-spacing: -0.022em;
   color: var(--cream);
 }
 
@@ -3007,7 +3008,7 @@ ul, ol {
   font-family: var(--font-display);
   font-size: 1.5rem;
   font-weight: 500;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.016em;
   color: var(--ink);
 }
 
@@ -3133,7 +3134,7 @@ ul, ol {
 
 .field input::placeholder,
 .field textarea::placeholder {
-  color: #9aa9a2;
+  color: #8b93a6;
 }
 
 .field input:focus,
@@ -3315,7 +3316,7 @@ ul, ol {
   font-size: clamp(1.7rem, 2.6vw, 2.25rem);
   font-weight: 500;
   line-height: 1.1;
-  letter-spacing: -0.045em;
+  letter-spacing: -0.02em;
 }
 
 .success-copy {
@@ -3386,7 +3387,7 @@ ul, ol {
   font-size: clamp(2.3rem, 4.2vw, 3.7rem);
   font-weight: 500;
   line-height: 1.03;
-  letter-spacing: -0.052em;
+  letter-spacing: -0.022em;
   color: var(--ink);
 }
 
@@ -4055,7 +4056,7 @@ ul, ol {
   font-size: clamp(2.5rem, 5.6vw, 5rem);
   font-weight: 500;
   line-height: 1;
-  letter-spacing: -0.055em;
+  letter-spacing: -0.022em;
   color: var(--cream);
 }
 
@@ -4082,7 +4083,7 @@ ul, ol {
 .site-footer {
   position: relative;
   padding-top: 64px;
-  background: #041a16;
+  background: #0a1324;
   color: var(--cream);
   overflow: hidden;
 }
@@ -4157,11 +4158,12 @@ ul, ol {
 
 .footer-col h3 {
   margin-bottom: 7px;
-  font-size: 0.58rem;
+  font-family: var(--font-body);
+  font-size: 0.6rem;
   font-weight: 500;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--mint);
+  color: #93a6ff;
 }
 
 .footer-col a,
@@ -4187,9 +4189,9 @@ ul, ol {
 .footer-mark {
   font-family: var(--font-display);
   font-size: clamp(3.8rem, 14vw, 12rem);
-  font-weight: 600;
+  font-weight: 500;
   line-height: 0.78;
-  letter-spacing: -0.07em;
+  letter-spacing: -0.03em;
   color: transparent;
   -webkit-text-stroke: 1px rgba(255, 255, 255, 0.11);
   white-space: nowrap;
@@ -4799,7 +4801,7 @@ ul, ol {
 
   .hero-title {
     font-size: clamp(2.7rem, 12vw, 3.7rem);
-    letter-spacing: -0.05em;
+    letter-spacing: -0.02em;
   }
 
   .hero-lede {
@@ -5414,4 +5416,15 @@ ul, ol {
     opacity: 1;
     transform: none;
   }
+}
+
+
+/* ---------- Top bar status on cobalt ---------- */
+.topbar .live .dot {
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.18);
+}
+
+.topbar .live {
+  color: rgba(255, 255, 255, 0.9);
 }
