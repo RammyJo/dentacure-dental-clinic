@@ -5397,3 +5397,17 @@ ul, ol {
     min-height: 44px;
   }
 }
+
+/* ---------- Booking honeypot + sending state ---------- */
+.hp-field {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.btn:disabled {
+  opacity: 0.65;
+  cursor: progress;
+}

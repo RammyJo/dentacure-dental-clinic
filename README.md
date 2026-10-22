@@ -91,16 +91,59 @@ The "Open now / Closed" pill is calculated live in `Asia/Manila`, so it follows 
 
 ## Booking form
 
-There is **no backend**. The 3-step wizard validates the request, then opens the visitor's email app with a pre-filled message to `my.dentacure@gmail.com`:
+The 3-step wizard posts JSON to `/api/book`, a Cloudflare Pages Function in
+`functions/api/book.js`:
 
 - Step 1 — treatment + first visit/returning
 - Step 2 — date + time (Sunday shows only 1:00–5:00 PM slots; a "flexible" option skips both)
 - Step 3 — name, phone, optional email and notes, consent
-- Success panel — "Open email again" and "Copy request" fallbacks
+- Success panel — "Request sent", or a pre-filled email fallback when delivery is unavailable
 
-Nothing is stored or transmitted by the site itself, and the UI says so.
+The function re-validates everything server-side (treatment, date window in
+`Asia/Manila`, weekday/Sunday slots, phone, consent), drops honeypot and
+too-fast submissions, and rate-limits to 3 requests per IP per 2 minutes when a
+KV binding is available. Nothing is stored unless the optional archive below is
+bound.
 
-To collect requests properly later, point the form at a service such as Formspree, Netlify Forms, or a small server endpoint — replace the `submit` handler in `script.js` (around the `bookingForm.addEventListener("submit", …)` call).
+### Email delivery (Resend)
+
+Requests are emailed with [Resend](https://resend.com). Until a key is added,
+the endpoint answers `503 not_configured` and the form automatically falls back
+to the pre-filled mailto flow — the site never dead-ends.
+
+1. Create a free Resend account using `my.dentacure@gmail.com`.
+2. Create an API key.
+3. Add it to the Pages project:
+
+   ```powershell
+   npx wrangler pages secret put RESEND_API_KEY --project-name dentacure-dental-clinic
+   ```
+
+4. Optional variables:
+   - `BOOKING_TO` — recipient(s), comma separated. Defaults to `my.dentacure@gmail.com`.
+   - `BOOKING_FROM` — sender. Leave the default `onboarding@resend.dev` until a
+     domain is verified in Resend.
+
+### Optional archive (KV)
+
+Bind a KV namespace as `BOOKINGS` to keep a copy of every delivered request for
+180 days (`booking:<timestamp>:<id>`). The same binding enables rate limiting.
+Without it, requests are emailed only.
+
+### Local development
+
+```powershell
+npx wrangler pages dev . --port 8788
+```
+
+Put local-only values in `.dev.vars` (git-ignored), never in the repo:
+
+```
+RESEND_API_KEY=re_test
+```
+
+The plain static preview (`python -m http.server`) has no Functions, so
+`/api/book` returns 404 there and the form exercises its email fallback.
 
 ---
 

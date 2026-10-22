@@ -467,19 +467,34 @@
   const emailAgain = $("#emailAgain");
   const copyButton = $("#copyRequest");
   const resetButton = $("#resetBooking");
+  const companyInput = $("#company");
+  const successEyebrow = $("#successEyebrow");
+  const successTitle = $("#successTitle");
+  const successCopy = $("#successCopy");
+
+  let formStartedAt = Date.now();
 
   const times = ["9:00 AM", "10:00 AM", "11:00 AM", "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM"];
   const timesSunday = ["1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM"];
 
+  function manilaDateString(offsetDays = 0) {
+    const today = new Intl.DateTimeFormat("en-CA", {
+      timeZone: "Asia/Manila",
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    }).format(new Date());
+    if (!offsetDays) return today;
+    const [y, m, d] = today.split("-").map(Number);
+    return new Date(Date.UTC(y, m - 1, d + offsetDays)).toISOString().slice(0, 10);
+  }
+
   function todayString() {
-    const d = new Date();
-    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+    return manilaDateString(0);
   }
 
   function maxDateString() {
-    const d = new Date();
-    d.setDate(d.getDate() + 90);
-    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+    return manilaDateString(90);
   }
 
   if (dateInput) {
@@ -685,10 +700,56 @@
     return `mailto:my.dentacure@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(requestBody())}`;
   }
 
-  function showSuccess() {
+  const successCopyText = {
+    sent: "We’ve sent your request. <strong>The clinic will confirm your slot by text or email</strong> during clinic hours.",
+    email: "We couldn’t send that automatically just now. <strong>Send it from your email app</strong> — everything is already filled in.",
+    rate_limited: "You’ve sent a few requests already. Please wait a minute, or <strong>send this one from your email app</strong>.",
+  };
+
+  function timeoutSignal(ms) {
+    if (typeof AbortSignal !== "undefined" && typeof AbortSignal.timeout === "function") {
+      return AbortSignal.timeout(ms);
+    }
+    const controller = new AbortController();
+    setTimeout(() => controller.abort(), ms);
+    return controller.signal;
+  }
+
+  function bookingPayload() {
+    return {
+      treatment: state.service,
+      firstVisit: state.firstVisit,
+      flexible: state.flexible,
+      date: state.date,
+      time: state.flexible ? "" : state.time,
+      name: nameInput?.value.trim() || "",
+      phone: phoneInput?.value.trim() || "",
+      email: emailInput?.value.trim() || "",
+      notes: notesInput?.value.trim() || "",
+      consent: Boolean(consentInput?.checked),
+      company: companyInput?.value || "",
+      elapsed: Date.now() - formStartedAt,
+    };
+  }
+
+  function setSending(isSending) {
+    if (!wizardSubmit) return;
+    wizardSubmit.disabled = isSending;
+    wizardSubmit.setAttribute("aria-busy", String(isSending));
+    wizardSubmit.innerHTML = isSending
+      ? 'Sending… <span class="btn-ico"><svg class="ico"><use href="#i-arrow"/></svg></span>'
+      : 'Send request <span class="btn-ico"><svg class="ico"><use href="#i-arrow"/></svg></span>';
+  }
+
+  function showSuccess(mode = "email") {
     if (!bookingForm || !successPanel) return;
     bookingForm.hidden = true;
     successPanel.hidden = false;
+
+    const sent = mode === "sent";
+    if (successEyebrow) successEyebrow.textContent = sent ? "Request sent" : "Request ready";
+    if (successTitle) successTitle.textContent = sent ? "You’re on the list." : "One tap from a healthier smile.";
+    if (successCopy) successCopy.innerHTML = successCopyText[mode] || successCopyText.email;
 
     if (successSummary) {
       const timeText = state.flexible && !state.time ? "Flexible — suggest a time" : state.time || "Flexible";
@@ -703,7 +764,10 @@
       `;
     }
 
-    if (emailAgain) emailAgain.href = requestHref();
+    if (emailAgain) {
+      emailAgain.hidden = sent;
+      emailAgain.href = requestHref();
+    }
     successPanel.scrollIntoView({ behavior: prefersReduced ? "auto" : "smooth", block: "center" });
   }
 
@@ -733,6 +797,9 @@
     if (dateInput) dateInput.value = "";
     if (flexibleInput) flexibleInput.checked = false;
     if (consentInput) consentInput.checked = false;
+    if (companyInput) companyInput.value = "";
+    formStartedAt = Date.now();
+    setSending(false);
     renderTimes();
     setStep(1);
   }
@@ -798,13 +865,37 @@
     }
   });
 
-  bookingForm?.addEventListener("submit", (event) => {
+  bookingForm?.addEventListener("submit", async (event) => {
     event.preventDefault();
+    if (wizardSubmit?.disabled) return;
     if (!validateStep3()) return;
-    const href = requestHref();
-    if (emailAgain) emailAgain.href = href;
-    window.location.href = href;
-    showSuccess();
+
+    setSending(true);
+    try {
+      const response = await fetch("/api/book", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(bookingPayload()),
+        signal: timeoutSignal(12000),
+      });
+      const result = await response.json().catch(() => ({}));
+
+      if (response.ok && result.ok) {
+        showSuccess("sent");
+      } else if (response.status === 429) {
+        showSuccess("rate_limited");
+      } else {
+        if (response.status === 400 && result.errors) {
+          console.warn("Booking rejected by the server", result.errors);
+        }
+        showSuccess("email");
+      }
+    } catch (error) {
+      console.warn("Booking request failed", error);
+      showSuccess("email");
+    } finally {
+      setSending(false);
+    }
   });
 
   copyButton?.addEventListener("click", async () => {

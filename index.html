@@ -27,7 +27,7 @@
   <link rel="preload" href="assets/fonts/clash-display-600.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/cabinet-grotesk-400.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="assets/fonts/fonts.css?v=2">
-  <link rel="stylesheet" href="styles.css?v=6">
+  <link rel="stylesheet" href="styles.css?v=7">
   <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
@@ -668,6 +668,10 @@
             <div class="wizard-progress" aria-hidden="true"><span id="wizardBar"></span></div>
 
             <form class="booking-form" id="bookingForm" novalidate>
+              <div class="hp-field" aria-hidden="true">
+                <label for="company">Company</label>
+                <input type="text" id="company" name="company" tabindex="-1" autocomplete="off">
+              </div>
               <!-- STEP 1 -->
               <fieldset class="form-step is-active" data-step="1">
                 <legend class="sr-only">Choose a treatment</legend>
@@ -746,7 +750,7 @@
 
                 <label class="checkline consent">
                   <input type="checkbox" id="consent">
-                  <span>I understand this is an appointment <em>request</em>, not a confirmed booking. Submitting opens my email app with the details filled in.</span>
+                  <span>I understand this is an appointment <em>request</em>, not a confirmed booking. The clinic will confirm my slot by text or email.</span>
                 </label>
                 <p class="form-error" id="consentError" role="alert" hidden>Please tick the box so we can send your request.</p>
               </fieldset>
@@ -754,25 +758,25 @@
               <div class="wizard-actions">
                 <button class="btn btn-ghost" type="button" id="wizardBack" hidden>Back</button>
                 <button class="btn btn-ink" type="button" id="wizardNext">Continue <span class="btn-ico"><svg class="ico"><use href="#i-arrow"/></svg></span></button>
-                <button class="btn btn-mint" type="submit" id="wizardSubmit" hidden>Prepare request <span class="btn-ico"><svg class="ico"><use href="#i-arrow"/></svg></span></button>
+                <button class="btn btn-mint" type="submit" id="wizardSubmit" hidden>Send request <span class="btn-ico"><svg class="ico"><use href="#i-arrow"/></svg></span></button>
               </div>
             </form>
 
             <div class="booking-success" id="bookingSuccess" hidden aria-live="polite">
               <span class="success-icon"><svg class="ico"><use href="#i-check"/></svg></span>
-              <p class="eyebrow"><span class="eyebrow-line" aria-hidden="true"></span> Request ready</p>
-              <h3>One tap from a healthier smile.</h3>
-              <p class="success-copy">We've prepared an email with your appointment details. <strong>Press send in your email app</strong> and we'll confirm your slot during clinic hours.</p>
+              <p class="eyebrow"><span class="eyebrow-line" aria-hidden="true"></span> <span id="successEyebrow">Request sent</span></p>
+              <h3 id="successTitle">You're on the list.</h3>
+              <p class="success-copy" id="successCopy">We've sent your request. <strong>The clinic will confirm your slot by text or email</strong> during clinic hours.</p>
               <div class="success-summary" id="successSummary"></div>
               <div class="success-actions">
-                <a class="btn btn-ink" id="emailAgain" href="mailto:my.dentacure@gmail.com">Open email again</a>
+                <a class="btn btn-ink" id="emailAgain" href="mailto:my.dentacure@gmail.com" hidden>Send by email</a>
                 <button class="btn btn-ghost" type="button" id="copyRequest">Copy request</button>
                 <a class="btn btn-ghost" href="tel:+639764857648"><svg class="ico"><use href="#i-phone"/></svg> Call instead</a>
               </div>
               <button class="text-link reset-link" type="button" id="resetBooking">Make another request</button>
             </div>
 
-            <p class="privacy-note"><svg class="ico"><use href="#i-shield"/></svg> Your details are used only to arrange your visit. Nothing is stored on this website.</p>
+            <p class="privacy-note"><svg class="ico"><use href="#i-shield"/></svg> Your details go straight to the clinic and are used only to arrange your visit.</p>
           </div>
         </div>
       </div>
@@ -1067,6 +1071,6 @@
     ]
   }
   </script>
-  <script src="script.js?v=3"></script>
+  <script src="script.js?v=4"></script>
 </body>
 </html>
